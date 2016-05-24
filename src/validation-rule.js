@@ -1,14 +1,30 @@
 import validate from 'validate.js';
 import {ValidationError} from 'aurelia-validation';
 
+/**
+ * A validation rule.
+ */
 export class ValidationRule {
-  name = '';
-  config;
-  constructor(name, config) {
+  name:string = '';
+  config:any;
+
+  /**
+   * Ctor.
+   * @param name the name of the validation rule.
+   * @param config the configuration of the validation rule. The configration is specific to the type of rule.
+   */
+  constructor(name:string, config:any) {
     this.name = name;
     this.config = config;
   }
-  validate(target, propName) {
+
+  /**
+   * Validates the given property of the given target object against this validation rule.
+   * @param target the target object to validate
+   * @param propName the name of the property to validate
+   * @return a {ValidationError} object when the validation fails or a falsey value when the validation succeeds.
+   */
+  validate(target, propName:string):ValidationError {
     if (target && propName) {
       let validator = { [propName]: { [this.name]: this.config } };
       let result = validate(target, validator);
@@ -20,42 +36,103 @@ export class ValidationRule {
     }
     throw new Error('Invalid target or property name.');
   }
-  static date(config = true) {
+
+  /**
+   * Creates a new date validation rule.
+   * @param config the validation configuration to use.
+   * @return {ValidationRule} the created rule.
+   */
+  static date(config:any = true):ValidationRule {
     return new ValidationRule('date', config);
   }
-  static datetime(config = true) {
+  /**
+   * Creates a new date and time validation rule.
+   * @param config the validation configuration to use.
+   * @return {ValidationRule} the created rule.
+   */
+  static datetime(config:any = true):ValidationRule {
     return new ValidationRule('datetime', config);
   }
-  static email(config = true) {
+  /**
+   * Creates a new email validation rule.
+   * @param config the validation configuration to use.
+   * @return {ValidationRule} the created rule.
+   */
+  static email(config:any = true):ValidationRule {
     return new ValidationRule('email', config);
   }
-  static equality(config) {
+  /**
+   * Creates a new equality validation rule.
+   * @param config the validation configuration to use.
+   * @return {ValidationRule} the created rule.
+   */
+  static equality(config:any):ValidationRule {
     return new ValidationRule('equality', config);
   }
-  static exclusion(config) {
+  /**
+   * Creates a new exclusion validation rule.
+   * @param config the validation configuration to use.
+   * @return {ValidationRule} the created rule.
+   */
+  static exclusion(config:any):ValidationRule {
     return new ValidationRule('exclusion', config);
   }
-  static format(config) {
+  /**
+   * Creates a new format validation rule.
+   * @param config the validation configuration to use.
+   * @return {ValidationRule} the created rule.
+   */
+  static format(config:any):ValidationRule {
     return new ValidationRule('format', config);
   }
-  static inclusion(config) {
+  /**
+   * Creates a new inclusion validation rule.
+   * @param config the validation configuration to use.
+   * @return {ValidationRule} the created rule.
+   */
+  static inclusion(config:any):ValidationRule {
     return new ValidationRule('inclusion', config);
   }
-  static lengthRule(config) {
+  /**
+   * Creates a new length validation rule.
+   * @param config the validation configuration to use.
+   * @return {ValidationRule} the created rule.
+   */
+  static lengthRule(config:any):ValidationRule {
     return new ValidationRule('length', config);
   }
-  static numericality(config = true) {
+  /**
+   * Creates a new numericality validation rule.
+   * @param config the validation configuration to use.
+   * @return {ValidationRule} the created rule.
+   */
+  static numericality(config:any = true):ValidationRule {
     return new ValidationRule('numericality', config);
   }
-  static presence(config = true) {
+  /**
+   * Creates a new presence validation rule.
+   * @param config the validation configuration to use.
+   * @return {ValidationRule} the created rule.
+   */
+  static presence(config:any = true):ValidationRule {
     return new ValidationRule('presence', config);
   }
-  static url(config = true) {
+  /**
+   * Creates a new url validation rule.
+   * @param config the validation configuration to use.
+   * @return {ValidationRule} the created rule.
+   */
+  static url(config:any = true):ValidationRule {
     return new ValidationRule('url', config);
   }
 }
 
-export function cleanResult(data) {
+/**
+ * Cleans results acquired from the underlying validation library. Removes all inherited elements.
+ * @param data the data to clean up. 
+ * @return {{}} the cleaned up data.
+ */
+export function cleanResult(data:any):any {
   let result = {};
   for (let prop in data) {
     if (data.hasOwnProperty(prop)) {

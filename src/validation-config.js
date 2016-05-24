@@ -1,9 +1,30 @@
+import {ValidationReporter} from './validation-reporter';
+import {ValidationError} from 'aurelia-validation';
+
+
+/**
+ * A validation configuration.
+ */
 export class ValidationConfig {
   __validationRules__ = [];
-  addRule(key, rule) {
+
+  /**
+   * Adds a rule for a property to this validation configuration.
+   * @param key the property name for which the rule should be applied.
+   * @param rule the rule to be added.
+   */
+  addRule(key:string, rule:ValidationRule) {
     this.__validationRules__.push({ key: key, rule: rule });
   }
-  validate(instance, reporter, key) {
+
+  /**
+   * Runs all configured validations for the given property of the given object.
+   * @param instance the object to be verified.
+   * @param reporter a reporter that should report the validation errors.
+   * @param key the property that should be validated.
+   * @return an array of { ValidationError } objects.
+     */
+  validate(instance:any, reporter:ValidationReporter, key:string) {
     let errors = [];
     this.__validationRules__.forEach(rule => {
       if (!key || key === rule.key) {
@@ -16,7 +37,8 @@ export class ValidationConfig {
     reporter.publish(errors);
     return errors;
   }
-  getValidationRules() {
+
+  getValidationRules() : any {
     return this.__validationRules__ || (this.__validationRules__ = aggregateValidationRules(this));
   }
   aggregateValidationRules() {

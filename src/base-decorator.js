@@ -1,6 +1,6 @@
 import {observeProperty} from './property-observer';
 
-export function base(targetOrConfig, key, descriptor, rule) {
+export function base(targetOrConfig:any|ValidationConfig, key:string, descriptor, rule:(it:any) => ValidationRule) {
   if (key) {
     let target = targetOrConfig;
     targetOrConfig = null;

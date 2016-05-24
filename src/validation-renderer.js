@@ -1,7 +1,7 @@
 import {DOM} from 'aurelia-pal';
 
 export class ValidationRenderer {
-  renderErrors(node, relevantErrors) {
+  renderErrors(node:Node, relevantErrors):void {
     this.unrenderErrors(node);
     if (relevantErrors.length) {
       node.parentElement.classList.add('has-error');
@@ -16,7 +16,7 @@ export class ValidationRenderer {
       });
     }
   }
-  unrenderErrors(node) {
+  unrenderErrors(node:Node):void {
     let deleteThese = [];
     node.parentElement.classList.remove('has-error');
     let children = node.parentElement.children;

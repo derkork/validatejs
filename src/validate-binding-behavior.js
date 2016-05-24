@@ -3,7 +3,7 @@ import {inject} from 'aurelia-dependency-injection';
 
 @inject(ValidationRenderer)
 export class ValidateBindingBehavior {
-  constructor(renderer) {
+  constructor(renderer:ValidationRenderer) {
     this.renderer = renderer;
   }
   bind(binding, source) {
