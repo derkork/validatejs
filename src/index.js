@@ -8,7 +8,11 @@ import {ValidationReporter as ValidateJSReporter} from './validation-reporter';
 export {ValidationReporter} from './validation-reporter';
 export {ValidationRenderer} from './validation-renderer';
 
-export function configure(config:ValidationConfig) {
+/**
+ * Sets up the given ValidationConfig object.
+ * @param config the config to be set up.
+ */
+export function configure(config:ValidationConfig):void {
   config.container.registerHandler(Validator, ValidateJSValidator);
   config.container.registerHandler(ValidationReporter, ValidateJSReporter);
   config.globalResources('./validate-binding-behavior');

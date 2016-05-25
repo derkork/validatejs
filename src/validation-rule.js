@@ -6,14 +6,14 @@ import {ValidationError} from 'aurelia-validation';
  */
 export class ValidationRule {
   name:string = '';
-  config:any;
+  config:any|ValidationConfig;
 
   /**
    * Ctor.
    * @param name the name of the validation rule.
    * @param config the configuration of the validation rule. The configration is specific to the type of rule.
    */
-  constructor(name:string, config:any) {
+  constructor(name:string, config:any|ValidationConfig) {
     this.name = name;
     this.config = config;
   }
@@ -24,7 +24,7 @@ export class ValidationRule {
    * @param propName the name of the property to validate
    * @return a {ValidationError} object when the validation fails or a falsey value when the validation succeeds.
    */
-  validate(target, propName:string):ValidationError {
+  validate(target:any, propName:string):ValidationError {
     if (target && propName) {
       let validator = { [propName]: { [this.name]: this.config } };
       let result = validate(target, validator);
@@ -42,7 +42,7 @@ export class ValidationRule {
    * @param config the validation configuration to use.
    * @return {ValidationRule} the created rule.
    */
-  static date(config:any = true):ValidationRule {
+  static date(config:any|ValidationConfig = true):ValidationRule {
     return new ValidationRule('date', config);
   }
   /**
@@ -50,7 +50,7 @@ export class ValidationRule {
    * @param config the validation configuration to use.
    * @return {ValidationRule} the created rule.
    */
-  static datetime(config:any = true):ValidationRule {
+  static datetime(config:any|ValidationConfig = true):ValidationRule {
     return new ValidationRule('datetime', config);
   }
   /**
@@ -58,7 +58,7 @@ export class ValidationRule {
    * @param config the validation configuration to use.
    * @return {ValidationRule} the created rule.
    */
-  static email(config:any = true):ValidationRule {
+  static email(config:any|ValidationConfig = true):ValidationRule {
     return new ValidationRule('email', config);
   }
   /**
@@ -66,7 +66,7 @@ export class ValidationRule {
    * @param config the validation configuration to use.
    * @return {ValidationRule} the created rule.
    */
-  static equality(config:any):ValidationRule {
+  static equality(config:any|ValidationConfig):ValidationRule {
     return new ValidationRule('equality', config);
   }
   /**
@@ -74,7 +74,7 @@ export class ValidationRule {
    * @param config the validation configuration to use.
    * @return {ValidationRule} the created rule.
    */
-  static exclusion(config:any):ValidationRule {
+  static exclusion(config:any|ValidationConfig):ValidationRule {
     return new ValidationRule('exclusion', config);
   }
   /**
@@ -82,7 +82,7 @@ export class ValidationRule {
    * @param config the validation configuration to use.
    * @return {ValidationRule} the created rule.
    */
-  static format(config:any):ValidationRule {
+  static format(config:any|ValidationConfig):ValidationRule {
     return new ValidationRule('format', config);
   }
   /**
@@ -90,7 +90,7 @@ export class ValidationRule {
    * @param config the validation configuration to use.
    * @return {ValidationRule} the created rule.
    */
-  static inclusion(config:any):ValidationRule {
+  static inclusion(config:any|ValidationConfig):ValidationRule {
     return new ValidationRule('inclusion', config);
   }
   /**
@@ -98,7 +98,7 @@ export class ValidationRule {
    * @param config the validation configuration to use.
    * @return {ValidationRule} the created rule.
    */
-  static lengthRule(config:any):ValidationRule {
+  static lengthRule(config:any|ValidationConfig):ValidationRule {
     return new ValidationRule('length', config);
   }
   /**
@@ -106,7 +106,7 @@ export class ValidationRule {
    * @param config the validation configuration to use.
    * @return {ValidationRule} the created rule.
    */
-  static numericality(config:any = true):ValidationRule {
+  static numericality(config:any|ValidationConfig = true):ValidationRule {
     return new ValidationRule('numericality', config);
   }
   /**
@@ -114,7 +114,7 @@ export class ValidationRule {
    * @param config the validation configuration to use.
    * @return {ValidationRule} the created rule.
    */
-  static presence(config:any = true):ValidationRule {
+  static presence(config:any|ValidationConfig = true):ValidationRule {
     return new ValidationRule('presence', config);
   }
   /**
@@ -122,7 +122,7 @@ export class ValidationRule {
    * @param config the validation configuration to use.
    * @return {ValidationRule} the created rule.
    */
-  static url(config:any = true):ValidationRule {
+  static url(config:any|ValidationConfig = true):ValidationRule {
     return new ValidationRule('url', config);
   }
 }
@@ -130,7 +130,7 @@ export class ValidationRule {
 /**
  * Cleans results acquired from the underlying validation library. Removes all inherited elements.
  * @param data the data to clean up. 
- * @return {{}} the cleaned up data.
+ * @return {any} the cleaned up data.
  */
 export function cleanResult(data:any):any {
   let result = {};

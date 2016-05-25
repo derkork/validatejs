@@ -4,10 +4,18 @@ import {ValidationEngine} from './validation-engine';
 import {ValidationRule} from './validation-rule';
 import {metadata} from 'aurelia-metadata';
 
+/**
+ * A Validator.
+ */
 export class Validator {
-  object;
-  config;
-  constructor(object) {
+  object:any;
+  config:ValidationConfig;
+
+  /**
+   * Ctor.
+   * @param object the object to be validated.
+   */
+  constructor(object:any) {
     this.object = object;
   }
 
@@ -24,7 +32,11 @@ export class Validator {
       config.validate(this.object, reporter);
     }
   }
-  getProperties() {
+
+  /**
+   * Does nothing right now. 
+   */
+  getProperties() : void {
     console.error('Not yet implemented');
   }
 

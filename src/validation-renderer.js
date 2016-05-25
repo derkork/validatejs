@@ -1,7 +1,15 @@
 import {DOM} from 'aurelia-pal';
 
+/**
+ * Renders validations into the DOM.
+ */
 export class ValidationRenderer {
-  renderErrors(node:Node, relevantErrors):void {
+  /**
+   * Renders validation errors into the dom.
+   * @param node the node into which the validation errors should be rendered.
+   * @param relevantErrors the list of errors to render.
+   */
+  renderErrors(node:Node, relevantErrors:ValidationError[]):void {
     this.unrenderErrors(node);
     if (relevantErrors.length) {
       node.parentElement.classList.add('has-error');
@@ -16,6 +24,11 @@ export class ValidationRenderer {
       });
     }
   }
+
+  /**
+   * Clears previously rendered validation messages from the given node.
+   * @param node the node to be cleared.
+   */
   unrenderErrors(node:Node):void {
     let deleteThese = [];
     node.parentElement.classList.remove('has-error');

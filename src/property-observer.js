@@ -3,8 +3,14 @@ import {ValidationConfig} from './validation-config';
 import {ValidationEngine} from './validation-engine';
 import {validationMetadataKey} from './metadata-key';
 
-
-export function observeProperty(target:any, key:string, descriptor:any, targetOrConfig:any|ValidationConfig, rule: (it:any) => ValidationRule) : void {
+/**
+ * Creates an observer on the given property.
+ * @param target the target object to observe.
+ * @param key the name of the property to observe.
+ * @param descriptor ?
+ * @param targetOrConfig a validation configuration or the target object to observe ?
+ */
+export function observeProperty(target:any, key:string, descriptor:any, targetOrConfig:any|ValidationConfig, rule: (it:any|ValidationConfig) => ValidationRule) : void {
   let config = metadata.getOrCreateOwn(validationMetadataKey, ValidationConfig, target);
   config.addRule(key, rule(targetOrConfig));
 

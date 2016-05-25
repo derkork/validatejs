@@ -24,7 +24,7 @@ export class ValidationConfig {
    * @param key the property that should be validated.
    * @return an array of { ValidationError } objects.
      */
-  validate(instance:any, reporter:ValidationReporter, key:string) {
+  validate(instance:any, reporter:ValidationReporter, key:string) : ValidationError[] {
     let errors = [];
     this.__validationRules__.forEach(rule => {
       if (!key || key === rule.key) {
